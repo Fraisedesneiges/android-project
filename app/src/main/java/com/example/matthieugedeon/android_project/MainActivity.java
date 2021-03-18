@@ -6,7 +6,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.json.JSONObject;
@@ -33,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
 
         AsyncAddressFetcher fetcher = new AsyncAddressFetcher(R.id.course,"course");
         fetcher.execute("https://blockchain.info/ticker");
+
+        populateView();
+
     }
 
     //Function found on StackOverflow
@@ -45,6 +50,29 @@ public class MainActivity extends AppCompatActivity {
         }
         is.close();
         return sb.toString();
+    }
+
+    private void populateView(){
+
+        //Populate Spinner (Android Developers)
+        Spinner spinner = (Spinner) findViewById(R.id.currency_course);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.currency_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
+        //Populate Spinner (Android Developers)
+        spinner = (Spinner) findViewById(R.id.coin_course);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        adapter = ArrayAdapter.createFromResource(this,
+                R.array.coin_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
     }
 
     //Tailored onClickListener that launch our parameterized AsyncTask
