@@ -1,4 +1,4 @@
-package com.example.matthieugedeon.android_project;
+package com.example.matthieugedeon.android_project.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,10 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import com.example.matthieugedeon.android_project.R;
+import com.example.matthieugedeon.android_project.classes.AsyncAddressFetcher;
 
 public class MainActivity extends AppCompatActivity {
 
