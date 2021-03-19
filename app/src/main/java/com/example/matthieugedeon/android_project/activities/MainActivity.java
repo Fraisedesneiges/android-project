@@ -11,7 +11,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.example.matthieugedeon.android_project.R;
-import com.example.matthieugedeon.android_project.classes.AsyncAddressFetcher;
+import com.example.matthieugedeon.android_project.classes.AsyncCourseFetcher;
+import com.example.matthieugedeon.android_project.classes.AsyncWalletFetcher;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         Button b1=(Button)findViewById(R.id.fetch_button);
         b1.setOnClickListener(new GetImageOnClickListener());
 
-        AsyncAddressFetcher fetcher = new AsyncAddressFetcher(R.id.course,"course",this);
+        AsyncCourseFetcher fetcher = new AsyncCourseFetcher(R.id.course,this);
         fetcher.execute("https://blockchain.info/ticker");
 
         populateView();

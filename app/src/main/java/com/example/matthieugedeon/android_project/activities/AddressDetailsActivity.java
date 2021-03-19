@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.widget.ListView;
 
 import com.example.matthieugedeon.android_project.R;
-import com.example.matthieugedeon.android_project.classes.AsyncAddressFetcher;
+import com.example.matthieugedeon.android_project.classes.AsyncWalletFetcher;
 import com.example.matthieugedeon.android_project.classes.ListAdapter;
 
 import org.json.JSONObject;
 
 import java.util.Vector;
+
+//TODO: The transactions are well fetched but need to be processed and styled in a better way
 
 public class AddressDetailsActivity extends AppCompatActivity {
 
@@ -31,7 +33,7 @@ public class AddressDetailsActivity extends AppCompatActivity {
         list.setAdapter(adapter);
 
 
-        AsyncAddressFetcher fetcher = new AsyncAddressFetcher("wallet",this,adapter);
+        AsyncWalletFetcher fetcher = new AsyncWalletFetcher(R.id.ad_balance,this,adapter);
         fetcher.execute(address);
     }
 }
