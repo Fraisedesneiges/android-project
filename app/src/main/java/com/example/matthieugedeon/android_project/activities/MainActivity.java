@@ -66,6 +66,18 @@ public class MainActivity extends AppCompatActivity {
         spinner.setAdapter(adapter);
 
         spinner.setOnItemSelectedListener(sl);
+
+        //Populate Spinner (Android Developers)
+        spinner = (Spinner) findViewById(R.id.coin_type);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        adapter = ArrayAdapter.createFromResource(this,
+                R.array.coin_types, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(sl);
     }
 
     //Tailored onClickListener that launch our parameterized AsyncTask
@@ -111,6 +123,20 @@ public class MainActivity extends AppCompatActivity {
             else if(parent.getId() == R.id.currency_course)
             {
                 //do this
+            }
+            else if(parent.getId() == R.id.coin_type){
+                ImageView iv = (ImageView) findViewById(R.id.search_icon);
+                String s = (String)parent.getItemAtPosition(pos);
+
+                switch (s) {
+                    case "BTC":
+                        iv.setImageDrawable(getDrawable(R.drawable.btc));
+                        break;
+                    case "ETH":
+                        iv.setImageDrawable(getDrawable(R.drawable.eth));
+                        break;
+                    default: break;
+                }
             }
             // An item was selected. You can retrieve the selected item using
             // parent.getItemAtPosition(pos)
