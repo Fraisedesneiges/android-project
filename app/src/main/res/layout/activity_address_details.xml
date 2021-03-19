@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#222222"
+    tools:context=".activities.AddressDetailsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="392dp"
+            android:layout_height="74dp"
+            android:layout_margin="20px"
+            android:background="#272727"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10px"
+            android:paddingHorizontal="30px">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="155dp"
+                android:layout_height="39dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/btc" />
+
+            <Spinner
+                android:id="@+id/coin_course"
+                android:layout_width="239dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/ad_balance"
+                android:layout_width="221dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView" />
+
+            <Spinner
+                android:id="@+id/currency_course"
+                android:layout_width="216dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
