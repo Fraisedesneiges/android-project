@@ -39,7 +39,9 @@ public class MainActivity extends AppCompatActivity {
         Spinner spinner = (Spinner)findViewById(R.id.currency_course);
         String text = spinner.getSelectedItem().toString();
         AsyncCourseFetcher fetcher = new AsyncCourseFetcher(R.id.course,text,this);
-        fetcher.execute("https://blockchain.info/ticker");
+        spinner = (Spinner)findViewById(R.id.coin_course);
+        text = spinner.getSelectedItem().toString();
+        fetcher.execute(text);
 
     }
 
@@ -114,12 +116,20 @@ public class MainActivity extends AppCompatActivity {
                 ImageView iv = (ImageView) findViewById(R.id.course_icon);
                 String s = (String)parent.getItemAtPosition(pos);
 
+                Spinner spinner = (Spinner)findViewById(R.id.currency_course) ;
+                String text = (String)spinner.getSelectedItem().toString().subSequence(2,4);
+
+                AsyncCourseFetcher fetcher;
                 switch (s) {
                     case "1 BTC":
                         iv.setImageDrawable(getDrawable(R.drawable.btc));
+                        fetcher = new AsyncCourseFetcher(R.id.course,text,activity);
+                        fetcher.execute(s);
                         break;
                     case "1 ETH":
                         iv.setImageDrawable(getDrawable(R.drawable.eth));
+                        fetcher = new AsyncCourseFetcher(R.id.course,text,activity);
+                        fetcher.execute(s);
                         break;
                     default: break;
                 }
@@ -128,7 +138,10 @@ public class MainActivity extends AppCompatActivity {
             {
                 String text = (String)parent.getSelectedItem().toString();
                 AsyncCourseFetcher fetcher = new AsyncCourseFetcher(R.id.course,text,activity);
-                fetcher.execute("https://blockchain.info/ticker");
+
+                Spinner spinner = (Spinner)findViewById(R.id.coin_course) ;
+                text = (String)spinner.getSelectedItem().toString();
+                fetcher.execute(text);
             }
             else if(parent.getId() == R.id.coin_type){
                 ImageView iv = (ImageView) findViewById(R.id.search_icon);
