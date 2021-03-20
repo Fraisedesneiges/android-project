@@ -1,6 +1,7 @@
 package com.example.matthieugedeon.android_project.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,6 +17,8 @@ import android.widget.Spinner;
 import com.example.matthieugedeon.android_project.R;
 import com.example.matthieugedeon.android_project.classes.AsyncCourseFetcher;
 import com.example.matthieugedeon.android_project.classes.AsyncWalletFetcher;
+import com.example.matthieugedeon.android_project.fragments.ButtonBaseFragment;
+import com.example.matthieugedeon.android_project.fragments.ButtonConnectedFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,6 +36,11 @@ public class MainActivity extends AppCompatActivity {
 
         b1=(Button)findViewById(R.id.open_signup);
         b1.setOnClickListener(new SignUpOnClickListener());
+
+        getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .add(R.id.fragment, ButtonBaseFragment.class, null)
+                .commit();
 
         populateView();
 
@@ -180,8 +188,14 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Log.i("Login","Clicked");
-            Intent intent = new Intent(MainActivity.this, LogInActivity.class);
-            startActivity(intent);
+            //Intent intent = new Intent(MainActivity.this, LogInActivity.class);
+            //startActivity(intent);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragment, ButtonConnectedFragment.class, null)
+                    .setReorderingAllowed(true)
+                    .addToBackStack("name") // name can be null
+                    .commit();
 
         }
     }
