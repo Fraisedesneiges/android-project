@@ -23,12 +23,14 @@ public class AsyncCourseFetcher  extends AsyncTask<String, Void, JSONObject> {
 
     JSONObject data;
     int viewItemID;
+    String currency;
     Activity activity;
 
-    public AsyncCourseFetcher(int viewItemID, Activity activity){
+    public AsyncCourseFetcher(int viewItemID, String currency, Activity activity){
         super();
         this.viewItemID = viewItemID;
         this.activity = activity;
+        this.currency = currency;
     }
 
 
@@ -53,7 +55,12 @@ public class AsyncCourseFetcher  extends AsyncTask<String, Void, JSONObject> {
 
         int value = 0;
         try {
-            value = data.getJSONObject("USD").getInt("last");
+            switch(currency){
+                case"$ USD": value = data.getJSONObject("USD").getInt("last"); break;
+                case"€ EUR": value = data.getJSONObject("EUR").getInt("last"); break;
+                case"£ GBP": value = data.getJSONObject("GBP").getInt("last"); break;
+                default: break;
+            }
             Log.i("Size",Integer.toString(value));
         }
         catch (Exception e){

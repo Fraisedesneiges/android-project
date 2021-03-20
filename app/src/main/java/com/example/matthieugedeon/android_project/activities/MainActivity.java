@@ -2,6 +2,7 @@ package com.example.matthieugedeon.android_project.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,10 +34,12 @@ public class MainActivity extends AppCompatActivity {
         b1=(Button)findViewById(R.id.open_signup);
         b1.setOnClickListener(new SignUpOnClickListener());
 
-        AsyncCourseFetcher fetcher = new AsyncCourseFetcher(R.id.course,this);
-        fetcher.execute("https://blockchain.info/ticker");
-
         populateView();
+
+        Spinner spinner = (Spinner)findViewById(R.id.currency_course);
+        String text = spinner.getSelectedItem().toString();
+        AsyncCourseFetcher fetcher = new AsyncCourseFetcher(R.id.course,text,this);
+        fetcher.execute("https://blockchain.info/ticker");
 
     }
 
@@ -52,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
 
-        SpinnerListener sl = new SpinnerListener();
+        SpinnerListener sl = new SpinnerListener(this);
         spinner.setOnItemSelectedListener(sl);
 
         //Populate Spinner (Android Developers)
@@ -87,6 +90,10 @@ public class MainActivity extends AppCompatActivity {
             Log.i("Button","Clicked");
             Intent intent = new Intent(MainActivity.this, AddressDetailsActivity.class);
             intent.putExtra("address", "https://blockchain.info/rawaddr/1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX");
+
+            Spinner spinner = (Spinner)findViewById(R.id.coin_type);
+            String text = spinner.getSelectedItem().toString();
+            intent.putExtra("coin", text);
             startActivity(intent);
 
         }
@@ -94,14 +101,11 @@ public class MainActivity extends AppCompatActivity {
 
     public class SpinnerListener implements AdapterView.OnItemSelectedListener {
 
-        /*
-        int spinnerID;
+        Activity activity;
 
-        public SpinnerListener(int spinnerID){
-            super();
-            this.spinnerID = spinnerID;
+        public SpinnerListener(Activity activity){
+            this.activity = activity;
         }
-         */
 
         public void onItemSelected(AdapterView<?> parent, View view,
                                    int pos, long id) {
@@ -122,7 +126,9 @@ public class MainActivity extends AppCompatActivity {
             }
             else if(parent.getId() == R.id.currency_course)
             {
-                //do this
+                String text = (String)parent.getSelectedItem().toString();
+                AsyncCourseFetcher fetcher = new AsyncCourseFetcher(R.id.course,text,activity);
+                fetcher.execute("https://blockchain.info/ticker");
             }
             else if(parent.getId() == R.id.coin_type){
                 ImageView iv = (ImageView) findViewById(R.id.search_icon);
