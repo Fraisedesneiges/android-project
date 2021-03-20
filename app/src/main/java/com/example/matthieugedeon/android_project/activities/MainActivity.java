@@ -23,12 +23,12 @@ public class MainActivity extends AppCompatActivity {
 
         //Finding the fetch button by it's id and linking a tailored onClickListener
         Button b1=(Button)findViewById(R.id.fetch_button);
-        b1.setOnClickListener(new GetImageOnClickListener());
+        //b1.setOnClickListener(new GetImageOnClickListener());
+        b1.setOnClickListener(new SignupOnClickListener());
+        //AsyncCourseFetcher fetcher = new AsyncCourseFetcher(R.id.course,this);
+        //fetcher.execute("https://blockchain.info/ticker");
 
-        AsyncCourseFetcher fetcher = new AsyncCourseFetcher(R.id.course,this);
-        fetcher.execute("https://blockchain.info/ticker");
-
-        populateView();
+       // populateView();
 
     }
 
@@ -66,6 +66,18 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+    //
+    //------DB Stuff--------
+    //
+    class SignupOnClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            Log.i("Button","Clicked");
+            Intent intent = new Intent(MainActivity.this, LogInActivity.class);
+            //intent.putExtra("address", "https://blockchain.info/rawaddr/1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX");
+            startActivity(intent);
 
+        }
+    }
 
 }
