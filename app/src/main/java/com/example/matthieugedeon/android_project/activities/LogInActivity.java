@@ -14,6 +14,7 @@ import com.example.matthieugedeon.android_project.R;
 import com.example.matthieugedeon.android_project.classes.DataBaseHelper;
 import com.example.matthieugedeon.android_project.classes.Parser;
 import com.example.matthieugedeon.android_project.classes.SessionData;
+import com.example.matthieugedeon.android_project.fragments.ButtonConnectedFragment;
 import com.example.matthieugedeon.android_project.fragments.MainConnectedFragment;
 
 public class LogInActivity extends AppCompatActivity {
@@ -56,11 +57,16 @@ public class LogInActivity extends AppCompatActivity {
 
                     } while (cursor.moveToNext());
                 }
+
+                SessionData.setUsername(un.getText().toString());
+
                 SessionData.getMainFM().beginTransaction()
-                        //.remove(fm.findFragmentById(R.id.content)) // resolves to A_Fragment instance
-                        .add(R.id.main_container, MainConnectedFragment.class, null)
-                        .addToBackStack("a")
-                        .commit();
+                        .replace(R.id.button_container, ButtonConnectedFragment.class, null)
+                        .commitAllowingStateLoss();
+
+                SessionData.getMainFM().beginTransaction()
+                        .replace(R.id.main_container, MainConnectedFragment.class, null)
+                        .commitAllowingStateLoss();
             } else {
                 toast("No such user in the database");
             }

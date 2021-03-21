@@ -106,6 +106,7 @@ public class MainBaseFragment extends Fragment {
         }
     }
 
+
     private void populateView(View view){
 
 

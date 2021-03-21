@@ -1,14 +1,22 @@
 package com.example.matthieugedeon.android_project.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.matthieugedeon.android_project.R;
+import com.example.matthieugedeon.android_project.activities.LogInActivity;
+import com.example.matthieugedeon.android_project.classes.SessionData;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,4 +71,32 @@ public class ButtonConnectedFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_button_connected, container, false);
     }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        TextView tv = (TextView)view.findViewById(R.id.user_name);
+
+        tv.setText(SessionData.getUsername());
+
+        Button b1=(Button)view.findViewById(R.id.disconnect);
+        b1.setOnClickListener(new DisconnectOnClickListener());
+    }
+
+    class DisconnectOnClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            Log.i("Disconnect","Clicked");
+            SessionData.getMainFM().beginTransaction()
+                    .replace(R.id.main_container, MainBaseFragment.class, null)
+                    .commitAllowingStateLoss();
+
+            SessionData.getMainFM().beginTransaction()
+                    .replace(R.id.button_container, ButtonBaseFragment.class, null)
+                    .commitAllowingStateLoss();
+
+        }
+    }
+
 }
