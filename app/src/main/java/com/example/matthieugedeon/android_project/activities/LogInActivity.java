@@ -2,8 +2,10 @@ package com.example.matthieugedeon.android_project.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +24,7 @@ public class LogInActivity extends AppCompatActivity {
     DataBaseHelper dbHelper;
     private Button logIn;
     private EditText un, pw;
+    Vibrator vib;
 
     public void toast(String text) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
@@ -36,6 +39,7 @@ public class LogInActivity extends AppCompatActivity {
         pw = (EditText) findViewById(R.id.login_password);
         logIn = (Button) findViewById(R.id.login_button);
         logIn.setOnClickListener(new loginOnClickListener());
+        vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
     }
 
@@ -69,6 +73,8 @@ public class LogInActivity extends AppCompatActivity {
                 SessionData.getMainFM().beginTransaction()
                         .replace(R.id.main_container, MainConnectedFragment.class, null)
                         .commitAllowingStateLoss();
+
+                vib.vibrate(300);
             } else {
                 toast("No such user in the database");
             }
