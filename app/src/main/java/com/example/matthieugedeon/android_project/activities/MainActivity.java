@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
         SessionData.initialize();
 
+        SessionData.setMainFM(getSupportFragmentManager());
+
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
                 .add(R.id.button_container, ButtonBaseFragment.class, null)
