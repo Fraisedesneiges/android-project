@@ -14,7 +14,7 @@ public class Parser {
         ArrayList<Wallet> allWallets = new ArrayList<Wallet>();
 
 
-        Log.i("Wall","In parser");
+        Log.i("Wall",rawWallet);
 
         if (rawWallet.equals("null")) {
 

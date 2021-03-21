@@ -115,6 +115,7 @@ public class MainConnectedFragment extends Fragment {
 
             Intent intent = new Intent(getActivity(), AddressDetailsActivity.class);
             intent.putExtra("address", address.getText().toString());
+            intent.putExtra("context", "fetch");
 
             Spinner spinner = (Spinner)getView().findViewById(R.id.c_coin_type);
             String text = spinner.getSelectedItem().toString();

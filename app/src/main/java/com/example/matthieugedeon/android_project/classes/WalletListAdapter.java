@@ -2,14 +2,20 @@ package com.example.matthieugedeon.android_project.classes;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.matthieugedeon.android_project.R;
+import com.example.matthieugedeon.android_project.activities.AddressDetailsActivity;
+import com.example.matthieugedeon.android_project.activities.SignUpActivity;
 import com.example.matthieugedeon.android_project.models.Wallet;
 
 import org.json.JSONException;
@@ -65,6 +71,9 @@ public class WalletListAdapter extends BaseAdapter {
             default: break;
         }
 
+        Button look = (Button)convertView.findViewById(R.id.i_button);
+        look.setOnClickListener(new lookOnClickListener(currentItem.getAddress(),currentItem.getCoin()));
+
         address.setText(currentItem.getAddress());
 
         // returns the view for the current row
@@ -72,6 +81,25 @@ public class WalletListAdapter extends BaseAdapter {
     }
     public void add(Wallet o){
         vector.add(o);
+    }
+
+    class lookOnClickListener implements View.OnClickListener{
+        private String address;
+        private String coin;
+        public lookOnClickListener(String address, String coin){
+            this.address = address;
+            this.coin = coin;
+        }
+        @Override
+        public void onClick(View v) {
+            Log.i("Signup","Clicked");
+            Intent intent = new Intent(activity, AddressDetailsActivity.class);
+            intent.putExtra("address", address);
+            intent.putExtra("coin", coin);
+            intent.putExtra("context", "Look");
+            activity.startActivity(intent);
+
+        }
     }
 
 

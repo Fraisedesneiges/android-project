@@ -33,6 +33,7 @@ public class AddressDetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String address = intent.getStringExtra("address");
         String coin = intent.getStringExtra("coin");
+        String context = intent.getStringExtra("context");
         ImageView icon = (ImageView)findViewById(R.id.address_icon);
         TextView addressValue = (TextView)findViewById(R.id.address_val);
         addressValue.setText(coin.concat(address));
@@ -55,7 +56,7 @@ public class AddressDetailsActivity extends AppCompatActivity {
         AsyncWalletFetcher fetcher = new AsyncWalletFetcher(R.id.ad_balance,this,adapter,coin);
         fetcher.execute(address);
 
-        if(SessionData.isConnected()){
+        if(SessionData.isConnected() && !context.equals("Look")){
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
                     .add(R.id.sub_container, AddAddressFragment.class,null)
