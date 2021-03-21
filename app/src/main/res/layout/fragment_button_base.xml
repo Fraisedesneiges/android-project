@@ -5,10 +5,29 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ButtonBaseFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Disconnected" />
+    <LinearLayout
+        android:layout_width="206dp"
+        android:layout_height="60dp"
+        android:background="#272727"
+        android:gravity="center"
+        android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/open_signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00FFFFFF"
+            android:text="Sign up"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/open_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00FFFFFF"
+            android:text="Log in"
+            android:textSize="12sp" />
+    </LinearLayout>
 </FrameLayout>
