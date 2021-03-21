@@ -17,9 +17,11 @@
             android:id="@+id/textView9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="My addresses :"
+            android:textColor="#FFFFFF" />
 
         <ListView
+            android:id="@+id/a_list"
             android:layout_width="match_parent"
             android:layout_height="180dp">
 
@@ -45,14 +47,14 @@
                     android:textColor="#FFFFFF" />
 
                 <Spinner
-                    android:id="@+id/spinner2"
+                    android:id="@+id/c_coin_type"
                     android:layout_width="92dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/c_icon"
                 android:layout_width="331dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="30px"
@@ -66,7 +68,7 @@
                 android:textColor="#FFFFFF" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName2"
+                android:id="@+id/c_address"
                 android:layout_width="278dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -74,10 +76,10 @@
                 android:textColor="#FFFFFF" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/c_fetch"
                 android:layout_width="223dp"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="Fetch address" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

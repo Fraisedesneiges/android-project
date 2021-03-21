@@ -14,6 +14,7 @@ import com.example.matthieugedeon.android_project.R;
 import com.example.matthieugedeon.android_project.classes.DataBaseHelper;
 import com.example.matthieugedeon.android_project.classes.Parser;
 import com.example.matthieugedeon.android_project.classes.SessionData;
+import com.example.matthieugedeon.android_project.classes.WalletListAdapter;
 import com.example.matthieugedeon.android_project.fragments.ButtonConnectedFragment;
 import com.example.matthieugedeon.android_project.fragments.MainConnectedFragment;
 
@@ -59,6 +60,7 @@ public class LogInActivity extends AppCompatActivity {
                 }
 
                 SessionData.setUsername(un.getText().toString());
+                SessionData.setConnected(true);
 
                 SessionData.getMainFM().beginTransaction()
                         .replace(R.id.button_container, ButtonConnectedFragment.class, null)

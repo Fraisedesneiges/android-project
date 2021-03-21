@@ -88,6 +88,8 @@ public class ButtonConnectedFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Log.i("Disconnect","Clicked");
+            SessionData.setConnected(false);
+            SessionData.setUsername("");
             SessionData.getMainFM().beginTransaction()
                     .replace(R.id.main_container, MainBaseFragment.class, null)
                     .commitAllowingStateLoss();

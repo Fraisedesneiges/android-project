@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         SessionData.initialize();
 
         SessionData.setMainFM(getSupportFragmentManager());
+        SessionData.setMain(this);
 
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)

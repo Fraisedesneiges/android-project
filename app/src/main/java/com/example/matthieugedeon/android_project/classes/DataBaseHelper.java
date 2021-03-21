@@ -94,7 +94,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase myDB = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COL3, wl);
-        myDB.update(NAME, cv, COL1 + " = " + un, new String[]{});
+        myDB.update(NAME, cv, COL1 + " = '" + un + "'", new String[]{});
         Log.i("WALLET", "UPDATED");
     }
 }

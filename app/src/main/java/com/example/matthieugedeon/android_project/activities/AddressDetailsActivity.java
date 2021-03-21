@@ -7,10 +7,14 @@ import android.media.Image;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.matthieugedeon.android_project.R;
 import com.example.matthieugedeon.android_project.classes.AsyncWalletFetcher;
 import com.example.matthieugedeon.android_project.classes.ListAdapter;
+import com.example.matthieugedeon.android_project.classes.SessionData;
+import com.example.matthieugedeon.android_project.fragments.AddAddressFragment;
+import com.example.matthieugedeon.android_project.fragments.MainBaseFragment;
 
 import org.json.JSONObject;
 
@@ -30,6 +34,8 @@ public class AddressDetailsActivity extends AppCompatActivity {
         String address = intent.getStringExtra("address");
         String coin = intent.getStringExtra("coin");
         ImageView icon = (ImageView)findViewById(R.id.address_icon);
+        TextView addressValue = (TextView)findViewById(R.id.address_val);
+        addressValue.setText(coin.concat(address));
 
         switch(coin){
             case "BTC":
@@ -48,5 +54,14 @@ public class AddressDetailsActivity extends AppCompatActivity {
 
         AsyncWalletFetcher fetcher = new AsyncWalletFetcher(R.id.ad_balance,this,adapter,coin);
         fetcher.execute(address);
+
+        if(SessionData.isConnected()){
+            getSupportFragmentManager().beginTransaction()
+                    .setReorderingAllowed(true)
+                    .add(R.id.sub_container, AddAddressFragment.class,null)
+                    .commit();
+
+
+        }
     }
 }
