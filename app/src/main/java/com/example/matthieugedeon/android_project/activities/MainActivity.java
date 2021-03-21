@@ -17,8 +17,11 @@ import android.widget.Spinner;
 import com.example.matthieugedeon.android_project.R;
 import com.example.matthieugedeon.android_project.classes.AsyncCourseFetcher;
 import com.example.matthieugedeon.android_project.classes.AsyncWalletFetcher;
+import com.example.matthieugedeon.android_project.classes.SessionData;
 import com.example.matthieugedeon.android_project.fragments.ButtonBaseFragment;
 import com.example.matthieugedeon.android_project.fragments.ButtonConnectedFragment;
+import com.example.matthieugedeon.android_project.fragments.MainBaseFragment;
+import com.example.matthieugedeon.android_project.fragments.MainConnectedFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,20 +30,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Finding the fetch button by it's id and linking a tailored onClickListener
-        Button b1=(Button)findViewById(R.id.fetch_button);
-        b1.setOnClickListener(new AddressDetailsOnClickListener());
-
-        b1=(Button)findViewById(R.id.open_login);
-        b1.setOnClickListener(new LogInOnClickListener());
-
-        b1=(Button)findViewById(R.id.open_signup);
-        b1.setOnClickListener(new SignUpOnClickListener());
+        SessionData.initialize();
 
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
-                .add(R.id.fragment, ButtonBaseFragment.class, null)
+                .add(R.id.button_container, ButtonBaseFragment.class, null)
                 .commit();
+
+        getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .add(R.id.main_container, MainBaseFragment.class, null)
+                .commit();
+
 
         populateView();
 
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
         spinner.setOnItemSelectedListener(sl);
 
+        /*
         //Populate Spinner (Android Developers)
         spinner = (Spinner) findViewById(R.id.coin_type);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -90,24 +92,9 @@ public class MainActivity extends AppCompatActivity {
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
 
-        spinner.setOnItemSelectedListener(sl);
+        spinner.setOnItemSelectedListener(sl);*/
     }
 
-    //Tailored onClickListener that launch our parameterized AsyncTask
-    class AddressDetailsOnClickListener implements View.OnClickListener{
-        @Override
-        public void onClick(View v) {
-            Log.i("Button","Clicked");
-            Intent intent = new Intent(MainActivity.this, AddressDetailsActivity.class);
-            intent.putExtra("address", "https://blockchain.info/rawaddr/1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX");
-
-            Spinner spinner = (Spinner)findViewById(R.id.coin_type);
-            String text = spinner.getSelectedItem().toString();
-            intent.putExtra("coin", text);
-            startActivity(intent);
-
-        }
-    }
 
     public class SpinnerListener implements AdapterView.OnItemSelectedListener {
 
@@ -152,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
                 fetcher.execute(text);
             }
             else if(parent.getId() == R.id.coin_type){
-                ImageView iv = (ImageView) findViewById(R.id.search_icon);
+                ImageView iv = (ImageView) findViewById(R.id.icon_search);
                 String s = (String)parent.getItemAtPosition(pos);
 
                 switch (s) {
@@ -171,32 +158,6 @@ public class MainActivity extends AppCompatActivity {
 
         public void onNothingSelected(AdapterView<?> parent) {
             // Another interface callback
-        }
-    }
-
-    class SignUpOnClickListener implements View.OnClickListener{
-        @Override
-        public void onClick(View v) {
-            Log.i("Signup","Clicked");
-            Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
-            startActivity(intent);
-
-        }
-    }
-
-    class LogInOnClickListener implements View.OnClickListener{
-        @Override
-        public void onClick(View v) {
-            Log.i("Login","Clicked");
-            //Intent intent = new Intent(MainActivity.this, LogInActivity.class);
-            //startActivity(intent);
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.fragment, ButtonConnectedFragment.class, null)
-                    .setReorderingAllowed(true)
-                    .addToBackStack("name") // name can be null
-                    .commit();
-
         }
     }
 

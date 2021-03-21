@@ -20,48 +20,20 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <fragment
-                android:id="@+id/fragment"
-                android:name="com.example.matthieugedeon.android_project.fragments.ButtonConnectedFragment"
-                android:layout_width="115dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
             <ImageView
                 android:id="@+id/imageView3"
-                android:layout_width="211dp"
-                android:layout_height="wrap_content"
+                android:layout_width="177dp"
+                android:layout_height="52dp"
                 android:layout_margin="20px"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/coincoinprojectsvg" />
 
-            <LinearLayout
-                android:layout_width="191dp"
-                android:layout_height="124dp"
-                android:layout_margin="20px"
-                android:layout_weight="1"
-                android:background="#272727"
-                android:gravity="center"
-                android:orientation="horizontal">
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/button_container"
+                android:layout_width="221dp"
+                android:layout_height="63dp"
+                android:layout_gravity="center"></androidx.fragment.app.FragmentContainerView>
 
-                <Button
-                    android:id="@+id/open_signup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="#00FFFFFF"
-                    android:text="Sign Up"
-                    android:textSize="10sp" />
-
-                <Button
-                    android:id="@+id/open_login"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="#00EEC643"
-                    android:text="Log In"
-                    android:textSize="10sp" />
-            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -100,70 +72,11 @@
                 android:layout_weight="1" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="394dp"
-            android:layout_height="518dp"
-            android:layout_gravity="center_horizontal|center_vertical"
-            android:layout_margin="20px"
-            android:background="#272727"
-            android:gravity="center"
-            android:orientation="vertical">
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/main_container"
+            android:layout_width="match_parent"
+            android:layout_height="552dp"></androidx.fragment.app.FragmentContainerView>
 
-            <LinearLayout
-                android:layout_width="274dp"
-                android:layout_height="58dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="124dp"
-                    android:layout_height="wrap_content"
-                    android:text="Choose a coin :"
-                    android:textAlignment="center"
-                    android:textColor="#FFFFFF" />
-
-                <Spinner
-                    android:id="@+id/coin_type"
-                    android:layout_width="88dp"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/search_icon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="30px"
-                app:srcCompat="@drawable/btc" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20px"
-                android:text="Enter a BTC address :"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF" />
-
-            <EditText
-                android:id="@+id/editTextTextPersonName"
-                android:layout_width="277dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:textColor="#FFFFFF" />
-
-            <Button
-                android:id="@+id/fetch_button"
-                android:layout_width="214dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="20px"
-                android:backgroundTint="#EEC643"
-                android:backgroundTintMode="add"
-                android:text="Fetch the address"
-                android:textColor="#171717" />
-
-        </LinearLayout>
 
     </LinearLayout>
 
