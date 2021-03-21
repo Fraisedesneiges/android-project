@@ -18,9 +18,8 @@ public class LogInActivity extends AppCompatActivity {
     private Button logIn;
     private EditText un, pw;
 
-    public void toast(String text)
-    {
-        Toast.makeText(this,text,Toast.LENGTH_SHORT).show();
+    public void toast(String text) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -28,35 +27,37 @@ public class LogInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
         dbHelper = new DataBaseHelper(this);
-        un = (EditText)findViewById(R.id.login_username);
-        pw = (EditText)findViewById(R.id.login_password);
-        logIn = (Button)findViewById(R.id.login_button);
+        un = (EditText) findViewById(R.id.login_username);
+        pw = (EditText) findViewById(R.id.login_password);
+        logIn = (Button) findViewById(R.id.login_button);
         logIn.setOnClickListener(new loginOnClickListener());
 
     }
 
-    class loginOnClickListener implements View.OnClickListener{
+    class loginOnClickListener implements View.OnClickListener {
         @Override
-        public void onClick(View v)
-        {
+        public void onClick(View v) {
             String u = un.getText().toString();
             String p = pw.getText().toString();
-            Cursor cursor = dbHelper.getUserData(u);
-            String d = "";
-            if (cursor.moveToFirst()) {
-                do {
-                    StringBuilder sb = new StringBuilder();
-                    int columnsQty = cursor.getColumnCount();
-                    for (int idx=0; idx<columnsQty; ++idx) {
-                        sb.append(cursor.getString(idx));
-                        if (idx < columnsQty - 1)
-                            sb.append("; ");
-                    }
-                    Log.v("LOG", String.format("Row: %d, Values: %s", cursor.getPosition(),
-                            sb.toString()));
-                } while (cursor.moveToNext());
+            boolean b = dbHelper.userCheck(u, p);
+            if (b) {
+                Cursor cursor = dbHelper.getUserData(u);
+                if (cursor.moveToFirst()) {
+                    do {
+                        StringBuilder sb = new StringBuilder();
+                        int columnsQty = cursor.getColumnCount();
+                        for (int idx = 0; idx < columnsQty; ++idx) {
+                            sb.append(cursor.getString(idx));
+                            if (idx < columnsQty - 1)
+                                sb.append("; ");
+                        }
+                        Log.i("LOG", String.format("Row: %d, Values: %s", cursor.getPosition(),
+                                sb.toString()));
+                    } while (cursor.moveToNext());
+                }
+            } else {
+                toast("No such user in the database");
             }
-            //toast(d);
         }
     }
 }

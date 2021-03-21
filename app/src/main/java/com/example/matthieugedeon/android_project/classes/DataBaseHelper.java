@@ -42,29 +42,46 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public boolean addUser(String un, String pw)                    //maybe use a JSON instead idk
     {
-        Log.i("addUser","reached");
+        Log.i("addUser", "reached");
         SQLiteDatabase myDB = this.getWritableDatabase();           //Opening or initializing the db
         ContentValues cv = new ContentValues();
         cv.put(COL1, un);
         cv.put(COL2, pw);
+        String query = "SELECT * FROM " + NAME + " WHERE " + COL1 + " = '" + un + "'";
+        Cursor cursor = myDB.rawQuery(query, null);
+        if (cursor.getCount() <= 0) {
+            long result = myDB.insert(NAME, null, cv);   //result becomes -1 if the insert does not go smoothly
 
-        long result = myDB.insert(NAME, null, cv);   //result becomes -1 if the insert does not go smoothly
-
-        if (result == -1) {
-            Log.i("DATABASE", "ERROR");
-            return false;
+            if (result == -1) {
+                Log.i("DATABASE", "ERROR");
+                return false;
+            }
+            Log.i("DATABASE", "OK");
+            return true;
         }
-        Log.i("DATABASE","OK");
-        return true;
+        Log.i("ALREADY A USER", "EXITING");
+        cursor.close();
+        return false;
     }
 
-    public Cursor getUserData(String un)
-    {
+    //Returns the wallets of the user
+    public Cursor getUserData(String un) {
         SQLiteDatabase myDB = this.getWritableDatabase();
-        String query = "SELECT * FROM " + NAME /*+ " WHERE " + COL1 + " = '" + un + "'"*/;
+        String query = "SELECT wallets FROM " + NAME + " WHERE " + COL1 + " = '" + un + "'";
         Cursor c = myDB.rawQuery(query, null);
         return c;
     }
 
+    public boolean userCheck(String un, String pw) {
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        String query = "SELECT * FROM " + NAME + " WHERE " + COL1 + " = '" + un + "' AND " + COL2 + " = '" + pw + "'";
+        Cursor cursor = myDB.rawQuery(query, null);
+        if (cursor.getCount() <= 0) {
+            Log.i("NO SUCH USER", "EXITING");
+            cursor.close();
+            return false;
+        }
+        return true;
+    }
 
 }

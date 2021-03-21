@@ -27,14 +27,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Finding the fetch button by it's id and linking a tailored onClickListener
-        Button b1=(Button)findViewById(R.id.fetch_button);
+        //Finding the fetch button by its id and linking a tailored onClickListener
+        Button b1 = (Button) findViewById(R.id.fetch_button);
         b1.setOnClickListener(new AddressDetailsOnClickListener());
 
-        b1=(Button)findViewById(R.id.open_login);
+        b1 = (Button) findViewById(R.id.open_login);
         b1.setOnClickListener(new LogInOnClickListener());
 
-        b1=(Button)findViewById(R.id.open_signup);
+        b1 = (Button) findViewById(R.id.open_signup);
         b1.setOnClickListener(new SignUpOnClickListener());
 
         getSupportFragmentManager().beginTransaction()
@@ -44,16 +44,16 @@ public class MainActivity extends AppCompatActivity {
 
         populateView();
 
-        Spinner spinner = (Spinner)findViewById(R.id.currency_course);
+        Spinner spinner = (Spinner) findViewById(R.id.currency_course);
         String text = spinner.getSelectedItem().toString();
-        AsyncCourseFetcher fetcher = new AsyncCourseFetcher(R.id.course,text,this);
-        spinner = (Spinner)findViewById(R.id.coin_course);
+        AsyncCourseFetcher fetcher = new AsyncCourseFetcher(R.id.course, text, this);
+        spinner = (Spinner) findViewById(R.id.coin_course);
         text = spinner.getSelectedItem().toString();
         fetcher.execute(text);
 
     }
 
-    private void populateView(){
+    private void populateView() {
 
         //Populate Spinner (Android Developers)
         Spinner spinner = (Spinner) findViewById(R.id.currency_course);
@@ -94,14 +94,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Tailored onClickListener that launch our parameterized AsyncTask
-    class AddressDetailsOnClickListener implements View.OnClickListener{
+    class AddressDetailsOnClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Log.i("Button","Clicked");
+            Log.i("Button", "Clicked");
             Intent intent = new Intent(MainActivity.this, AddressDetailsActivity.class);
             intent.putExtra("address", "https://blockchain.info/rawaddr/1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX");
 
-            Spinner spinner = (Spinner)findViewById(R.id.coin_type);
+            Spinner spinner = (Spinner) findViewById(R.id.coin_type);
             String text = spinner.getSelectedItem().toString();
             intent.putExtra("coin", text);
             startActivity(intent);
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
         Activity activity;
 
-        public SpinnerListener(Activity activity){
+        public SpinnerListener(Activity activity) {
             this.activity = activity;
         }
 
@@ -122,38 +122,36 @@ public class MainActivity extends AppCompatActivity {
 
             if (parent.getId() == R.id.coin_course) {
                 ImageView iv = (ImageView) findViewById(R.id.course_icon);
-                String s = (String)parent.getItemAtPosition(pos);
+                String s = (String) parent.getItemAtPosition(pos);
 
-                Spinner spinner = (Spinner)findViewById(R.id.currency_course) ;
-                String text = (String)spinner.getSelectedItem().toString();
+                Spinner spinner = (Spinner) findViewById(R.id.currency_course);
+                String text = (String) spinner.getSelectedItem().toString();
 
                 AsyncCourseFetcher fetcher;
                 switch (s) {
                     case "1 BTC":
                         iv.setImageDrawable(getDrawable(R.drawable.btc));
-                        fetcher = new AsyncCourseFetcher(R.id.course,text,activity);
+                        fetcher = new AsyncCourseFetcher(R.id.course, text, activity);
                         fetcher.execute(s);
                         break;
                     case "1 ETH":
                         iv.setImageDrawable(getDrawable(R.drawable.eth));
-                        fetcher = new AsyncCourseFetcher(R.id.course,text,activity);
+                        fetcher = new AsyncCourseFetcher(R.id.course, text, activity);
                         fetcher.execute(s);
                         break;
-                    default: break;
+                    default:
+                        break;
                 }
-            }
-            else if(parent.getId() == R.id.currency_course)
-            {
-                String text = (String)parent.getSelectedItem().toString();
-                AsyncCourseFetcher fetcher = new AsyncCourseFetcher(R.id.course,text,activity);
+            } else if (parent.getId() == R.id.currency_course) {
+                String text = (String) parent.getSelectedItem().toString();
+                AsyncCourseFetcher fetcher = new AsyncCourseFetcher(R.id.course, text, activity);
 
-                Spinner spinner = (Spinner)findViewById(R.id.coin_course) ;
-                text = (String)spinner.getSelectedItem().toString();
+                Spinner spinner = (Spinner) findViewById(R.id.coin_course);
+                text = (String) spinner.getSelectedItem().toString();
                 fetcher.execute(text);
-            }
-            else if(parent.getId() == R.id.coin_type){
+            } else if (parent.getId() == R.id.coin_type) {
                 ImageView iv = (ImageView) findViewById(R.id.search_icon);
-                String s = (String)parent.getItemAtPosition(pos);
+                String s = (String) parent.getItemAtPosition(pos);
 
                 switch (s) {
                     case "BTC":
@@ -162,7 +160,8 @@ public class MainActivity extends AppCompatActivity {
                     case "ETH":
                         iv.setImageDrawable(getDrawable(R.drawable.eth));
                         break;
-                    default: break;
+                    default:
+                        break;
                 }
             }
             // An item was selected. You can retrieve the selected item using
@@ -174,22 +173,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    class SignUpOnClickListener implements View.OnClickListener{
+    class SignUpOnClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Log.i("Signup","Clicked");
+            Log.i("Signup", "Clicked");
             Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
             startActivity(intent);
 
         }
     }
 
-    class LogInOnClickListener implements View.OnClickListener{
+    class LogInOnClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Log.i("Login","Clicked");
-            //Intent intent = new Intent(MainActivity.this, LogInActivity.class);
-            //startActivity(intent);
+            Log.i("Login", "Clicked");
+            Intent intent = new Intent(MainActivity.this, LogInActivity.class);
+            startActivity(intent);
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.fragment, ButtonConnectedFragment.class, null)
