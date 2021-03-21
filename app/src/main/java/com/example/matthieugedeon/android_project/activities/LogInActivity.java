@@ -34,6 +34,7 @@ public class LogInActivity extends AppCompatActivity {
 
     }
 
+    //Logs the wallet of the users credentials
     class loginOnClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
@@ -45,14 +46,8 @@ public class LogInActivity extends AppCompatActivity {
                 if (cursor.moveToFirst()) {
                     do {
                         StringBuilder sb = new StringBuilder();
-                        int columnsQty = cursor.getColumnCount();
-                        for (int idx = 0; idx < columnsQty; ++idx) {
-                            sb.append(cursor.getString(idx));
-                            if (idx < columnsQty - 1)
-                                sb.append("; ");
-                        }
-                        Log.i("LOG", String.format("Row: %d, Values: %s", cursor.getPosition(),
-                                sb.toString()));
+                        sb.append(cursor.getString(0));
+                        Log.i("LOG", sb.toString());
                     } while (cursor.moveToNext());
                 }
             } else {

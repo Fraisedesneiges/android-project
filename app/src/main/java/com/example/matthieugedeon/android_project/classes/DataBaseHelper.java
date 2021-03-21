@@ -9,6 +9,8 @@ import android.database.DatabaseErrorHandler;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.NavigableMap;
+
 public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "UserDB";
     private static final String NAME = "UserTable";
@@ -40,7 +42,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         myDB.execSQL(creationQuery);
     }
 
-    public boolean addUser(String un, String pw)                    //maybe use a JSON instead idk
+    //Adds a non existing user to the database
+    public boolean addUser(String un, String pw)
     {
         Log.i("addUser", "reached");
         SQLiteDatabase myDB = this.getWritableDatabase();           //Opening or initializing the db
@@ -72,6 +75,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return c;
     }
 
+    //Checks if the user exists
     public boolean userCheck(String un, String pw) {
         SQLiteDatabase myDB = this.getWritableDatabase();
         String query = "SELECT * FROM " + NAME + " WHERE " + COL1 + " = '" + un + "' AND " + COL2 + " = '" + pw + "'";
@@ -84,4 +88,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    //Updates the Wallet for the user
+    public void updateWallet(String un, String wl)
+    {
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COL3, wl);
+        myDB.update(NAME, cv, COL1 + " = " + un, new String[]{});
+        Log.i("WALLET", "UPDATED");
+    }
 }
