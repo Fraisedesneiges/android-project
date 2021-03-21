@@ -25,35 +25,49 @@
 
             <ImageView
                 android:id="@+id/address_icon"
-                android:layout_width="115dp"
+                android:layout_width="48dp"
                 android:layout_height="31dp"
+                android:layout_margin="30px"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/btc" />
 
             <TextView
                 android:id="@+id/balance"
-                android:layout_width="185dp"
+                android:layout_width="99dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Balance :" />
+                android:text="Balance :"
+                android:textColor="#FFFFFF" />
 
             <TextView
                 android:id="@+id/ad_balance"
-                android:layout_width="221dp"
+                android:layout_width="131dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:textColor="#FFFFFF" />
 
             <Spinner
                 android:id="@+id/currency_course"
-                android:layout_width="216dp"
+                android:layout_width="131dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/address_val"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView" />
         </LinearLayout>
 
         <ListView
             android:id="@+id/list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="542dp" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/sub_container"
+            android:layout_width="411dp"
+            android:layout_height="100dp"></androidx.fragment.app.FragmentContainerView>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

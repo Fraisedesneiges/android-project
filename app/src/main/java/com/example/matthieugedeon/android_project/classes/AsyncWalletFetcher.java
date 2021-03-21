@@ -22,16 +22,21 @@ import java.net.URL;
 //AsyncTask to get the JSON object containing wallet data from URL
 public class AsyncWalletFetcher extends AsyncTask<String, Void, JSONObject> {
 
+    final static String ETH_API = "https://api.blockcypher.com/v1/eth/main/addrs/";
+    final static String BTC_API = "https://blockchain.info/rawaddr/";
+
     JSONObject data;
     int viewItemID = 0;
     Activity activity;
+    String coin;
     ListAdapter adapter;
 
-    public AsyncWalletFetcher(int viewItemID, Activity activity, ListAdapter adapter){
+    public AsyncWalletFetcher(int viewItemID, Activity activity, ListAdapter adapter, String coin){
         super();
         this.viewItemID = viewItemID;
         this.activity = activity;
         this.adapter = adapter;
+        this.coin = coin;
     }
 
     //Function found on StackOverflow
@@ -51,26 +56,11 @@ public class AsyncWalletFetcher extends AsyncTask<String, Void, JSONObject> {
         super.onPostExecute(jsonObject);
         Log.i("CP", "In OnPostExecute");
 
-        TextView tv =(TextView) this.activity.findViewById(viewItemID);
-
-        int value = 0;
-        try {
-            value = data.getInt("final_balance");
-            JSONArray array = jsonObject.getJSONArray("txs");
-            Log.i("INFO",Integer.toString(array.length()));
-            for(int i = 0;i<array.length();i++){
-                adapter.add(array.getJSONObject(i));
-
-                //Notify our adapter that its data set has been updated
-                adapter.notifyDataSetChanged();
-            }
-            Log.i("Size",Integer.toString(value));
+        switch (coin){
+            case "BTC": handleBitcoin(data); break;
+            case "ETH": handleEthereum(data); break;
+            default: break;
         }
-        catch (Exception e){
-            Log.i("ERR", "Value not assigned");
-        }
-
-        tv.setText(Integer.toString(value));
 
     }
 
@@ -79,8 +69,14 @@ public class AsyncWalletFetcher extends AsyncTask<String, Void, JSONObject> {
         Log.i("Thread","In Thread");
         URL url;
         for(int i = 0; i<strings.length; i++){
+            String endpoint = "";
             try {
-                url = new URL(strings[i]);
+                switch(coin){
+                    case "BTC": endpoint = BTC_API.concat(strings[i]); break;
+                    case "ETH": endpoint = ETH_API.concat(strings[i]); break;
+                    default: break;
+                }
+                url = new URL(endpoint);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
                 try {
@@ -106,5 +102,54 @@ public class AsyncWalletFetcher extends AsyncTask<String, Void, JSONObject> {
             }
         }
         return data;
+    }
+
+    private void handleEthereum(JSONObject data){
+
+        int value = 0;
+
+        try {
+            value = data.getInt("balance");
+            JSONArray array = data.getJSONArray("txrefs");
+            Log.i("INFO",Integer.toString(array.length()));
+            for(int i = 0;i<array.length();i++){
+                adapter.add(array.getJSONObject(i));
+
+                //Notify our adapter that its data set has been updated
+                adapter.notifyDataSetChanged();
+            }
+
+            Log.i("Size",Integer.toString(value));
+        }
+        catch (Exception e){
+            Log.i("ERR", "Value not assigned");
+        }
+
+        TextView tv =(TextView) this.activity.findViewById(viewItemID);
+        tv.setText(Integer.toString(value));
+    }
+
+    private void handleBitcoin(JSONObject data){
+        int value = 0;
+
+        try {
+            value = data.getInt("final_balance");
+            JSONArray array = data.getJSONArray("txs");
+            Log.i("INFO",Integer.toString(array.length()));
+            for(int i = 0;i<array.length();i++){
+                adapter.add(array.getJSONObject(i));
+
+                //Notify our adapter that its data set has been updated
+                adapter.notifyDataSetChanged();
+            }
+
+            Log.i("Size",Integer.toString(value));
+        }
+        catch (Exception e){
+            Log.i("ERR", "Value not assigned");
+        }
+
+        TextView tv =(TextView) this.activity.findViewById(viewItemID);
+        tv.setText(Integer.toString(value));
     }
 }

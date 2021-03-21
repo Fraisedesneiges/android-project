@@ -1,14 +1,22 @@
 package com.example.matthieugedeon.android_project.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.matthieugedeon.android_project.R;
+import com.example.matthieugedeon.android_project.activities.LogInActivity;
+import com.example.matthieugedeon.android_project.activities.MainActivity;
+import com.example.matthieugedeon.android_project.activities.SignUpActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,4 +71,36 @@ public class ButtonBaseFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_button_base, container, false);
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Button b1=(Button)view.findViewById(R.id.open_login);
+        b1.setOnClickListener(new LogInOnClickListener());
+
+        b1=(Button)view.findViewById(R.id.open_signup);
+        b1.setOnClickListener(new SignUpOnClickListener());
+    }
+
+    class SignUpOnClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            Log.i("Signup","Clicked");
+            Intent intent = new Intent(getActivity(), SignUpActivity.class);
+            startActivity(intent);
+
+        }
+    }
+
+    class LogInOnClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            Log.i("Login","Clicked");
+            Intent intent = new Intent(getActivity(), LogInActivity.class);
+            startActivity(intent);
+
+        }
+    }
+
 }

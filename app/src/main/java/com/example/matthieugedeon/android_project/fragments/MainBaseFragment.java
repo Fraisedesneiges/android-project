@@ -1,5 +1,6 @@
 package com.example.matthieugedeon.android_project.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -16,38 +17,29 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.example.matthieugedeon.android_project.R;
 import com.example.matthieugedeon.android_project.activities.AddressDetailsActivity;
-import com.example.matthieugedeon.android_project.classes.ListAdapter;
-import com.example.matthieugedeon.android_project.classes.SessionData;
-import com.example.matthieugedeon.android_project.classes.WalletListAdapter;
-import com.example.matthieugedeon.android_project.models.Wallet;
-
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Vector;
+import com.example.matthieugedeon.android_project.activities.MainActivity;
+import com.example.matthieugedeon.android_project.classes.AsyncCourseFetcher;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MainConnectedFragment#newInstance} factory method to
+ * Use the {@link MainBaseFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MainConnectedFragment extends Fragment {
+public class MainBaseFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final Activity ARG_PARAM1 = null;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    public MainConnectedFragment() {
+    public MainBaseFragment() {
         // Required empty public constructor
     }
 
@@ -57,14 +49,14 @@ public class MainConnectedFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MainConnectedFragment.
+     * @return A new instance of fragment MainBaseFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MainConnectedFragment newInstance(String param1, String param2) {
-        MainConnectedFragment fragment = new MainConnectedFragment();
+    public static MainBaseFragment newInstance(String param1, String param2) {
+        MainBaseFragment fragment = new MainBaseFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        //args.putString(ARG_PARAM1, param1);
+        //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -73,16 +65,18 @@ public class MainConnectedFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+           // mParam1 = getArguments().getString(ARG_PARAM1);
+            //mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main_connected, container, false);
+        return inflater.inflate(R.layout.fragment_main_base, container, false);
     }
 
     @Override
@@ -90,20 +84,8 @@ public class MainConnectedFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         populateView(view);
 
-        Button b1=(Button)view.findViewById(R.id.c_fetch);
+        Button b1=(Button)view.findViewById(R.id.fetch_button);
         b1.setOnClickListener(new AddressDetailsOnClickListener());
-
-        ListView list = (ListView)view.findViewById(R.id.a_list);
-        WalletListAdapter adapter = new WalletListAdapter(SessionData.getMain(),new Vector<Wallet>(), SessionData.getMain());
-        list.setAdapter(adapter);
-        SessionData.setWadapter(adapter);
-
-        ArrayList<Wallet> wallets = SessionData.getWallets();
-        wallets.forEach(wallet -> {
-            SessionData.getWadapter().add(wallet);
-            SessionData.getWadapter().notifyDataSetChanged();
-        });
-
     }
 
     //Tailored onClickListener that launch our parameterized AsyncTask
@@ -111,19 +93,20 @@ public class MainConnectedFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Log.i("Button","Clicked");
-            EditText address = (EditText)getView().findViewById(R.id.c_address);
+            EditText address = (EditText)getView().findViewById(R.id.address);
 
             Intent intent = new Intent(getActivity(), AddressDetailsActivity.class);
             intent.putExtra("address", address.getText().toString());
             intent.putExtra("context", "fetch");
 
-            Spinner spinner = (Spinner)getView().findViewById(R.id.c_coin_type);
+            Spinner spinner = (Spinner)getView().findViewById(R.id.coin_type);
             String text = spinner.getSelectedItem().toString();
             intent.putExtra("coin", text);
             startActivity(intent);
 
         }
     }
+
 
     private void populateView(View view){
 
@@ -132,7 +115,7 @@ public class MainConnectedFragment extends Fragment {
 
 
         //Populate Spinner (Android Developers)
-        Spinner spinner = (Spinner) view.findViewById(R.id.c_coin_type);
+        Spinner spinner = (Spinner) view.findViewById(R.id.coin_type);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.coin_types, android.R.layout.simple_spinner_item);
@@ -150,8 +133,8 @@ public class MainConnectedFragment extends Fragment {
         public void onItemSelected(AdapterView<?> parent, View view,
                                    int pos, long id) {
 
-            if(parent.getId() == R.id.c_coin_type){
-                ImageView iv = (ImageView) getView().findViewById(R.id.c_icon);
+            if(parent.getId() == R.id.coin_type){
+                ImageView iv = (ImageView) getView().findViewById(R.id.icon_search);
                 String s = (String)parent.getItemAtPosition(pos);
 
                 switch (s) {
