@@ -24,17 +24,18 @@
             android:paddingHorizontal="30px">
 
             <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="155dp"
-                android:layout_height="39dp"
+                android:id="@+id/address_icon"
+                android:layout_width="115dp"
+                android:layout_height="31dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/btc" />
 
-            <Spinner
-                android:id="@+id/coin_course"
-                android:layout_width="239dp"
+            <TextView
+                android:id="@+id/balance"
+                android:layout_width="185dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="Balance :" />
 
             <TextView
                 android:id="@+id/ad_balance"

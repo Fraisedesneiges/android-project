@@ -3,7 +3,9 @@ package com.example.matthieugedeon.android_project.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.matthieugedeon.android_project.R;
@@ -26,6 +28,14 @@ public class AddressDetailsActivity extends AppCompatActivity {
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
         String address = intent.getStringExtra("address");
+        String coin = intent.getStringExtra("coin");
+        ImageView icon = (ImageView)findViewById(R.id.address_icon);
+
+        switch(coin){
+            case "BTC": icon.setImageDrawable(getDrawable(R.drawable.btc)); break;
+            case "ETH": icon.setImageDrawable(getDrawable(R.drawable.eth)); break;
+            default: break;
+        }
 
         //Getting the list by its id and linking our tailored adapter to it
         ListView list = (ListView)findViewById(R.id.list);

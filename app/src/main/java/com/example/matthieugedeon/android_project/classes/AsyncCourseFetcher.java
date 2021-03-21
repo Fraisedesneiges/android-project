@@ -21,14 +21,18 @@ import java.net.URL;
 
 public class AsyncCourseFetcher  extends AsyncTask<String, Void, JSONObject> {
 
+    final static String COURSE_URL = "https://api.coinbase.com/v2/exchange-rates?currency=";
+
     JSONObject data;
     int viewItemID;
+    String currency;
     Activity activity;
 
-    public AsyncCourseFetcher(int viewItemID, Activity activity){
+    public AsyncCourseFetcher(int viewItemID, String currency, Activity activity){
         super();
         this.viewItemID = viewItemID;
         this.activity = activity;
+        this.currency = currency;
     }
 
 
@@ -51,16 +55,21 @@ public class AsyncCourseFetcher  extends AsyncTask<String, Void, JSONObject> {
 
         TextView tv =(TextView) this.activity.findViewById(viewItemID);
 
-        int value = 0;
+        String value = "";
         try {
-            value = data.getJSONObject("USD").getInt("last");
-            Log.i("Size",Integer.toString(value));
+            switch(currency){
+                case"$ USD": value = data.getJSONObject("data").getJSONObject("rates").getString("USD"); break;
+                case"€ EUR": value = data.getJSONObject("data").getJSONObject("rates").getString("EUR"); break;
+                case"£ GBP": value = data.getJSONObject("data").getJSONObject("rates").getString("GBP"); break;
+                default: break;
+            }
+            Log.i("Size",value);
         }
         catch (Exception e){
             Log.i("ERR", "Value not assigned");
         }
 
-        tv.setText(Integer.toString(value));
+        tv.setText(value);
 
     }
 
@@ -70,7 +79,14 @@ public class AsyncCourseFetcher  extends AsyncTask<String, Void, JSONObject> {
         URL url;
         for(int i = 0; i<strings.length; i++){
             try {
-                url = new URL(strings[i]);
+                url = new URL(COURSE_URL+strings[i]);
+                Log.i("ADDR",strings[i]);
+                switch (strings[i]){
+                    case "1 BTC": url = new URL(COURSE_URL.concat("BTC")); break;
+                    case "1 ETH": url = new URL(COURSE_URL+"ETH"); break;
+                    case "1 DOGE": url = new URL(COURSE_URL+"DOGE"); break;
+                    default: break;
+                }
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
                 try {
