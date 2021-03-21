@@ -5,7 +5,7 @@ public class Wallet {
     private String address;
 
     public Wallet(String coin, String address){
-        this.coin = coin;
+        this.coin = coin; //3 first digits
         this.address = address;
     }
 
