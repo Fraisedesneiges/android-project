@@ -20,10 +20,12 @@ import java.util.Vector;
 public class ListAdapter extends BaseAdapter {
     private Context context; //context
     private Vector<JSONObject> vector;
+    private String coin;
 
-    public ListAdapter(Context context, Vector<JSONObject> vector){
+    public ListAdapter(Context context, Vector<JSONObject> vector, String coin){
         this.context = context;
         this.vector = vector;
+        this.coin = coin;
     }
 
     @Override
@@ -49,6 +51,41 @@ public class ListAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.transaction_item, parent, false); //inflate layout with image item
         }
 
+        if(coin.equals("BTC")){
+            convertView = handleBitcoin(position,convertView);
+        }
+        else if(coin.equals("ETH")){
+            convertView = handleEthereum(position,convertView);
+        }
+
+
+        // returns the view for the current row
+        return convertView;
+    }
+    public void add(JSONObject o){
+        vector.add(o);
+    }
+
+    public View handleEthereum(int position, View convertView){
+        // get current item to be displayed
+        JSONObject currentItem = (JSONObject) getItem(position);
+
+        // get the TextView for item name and item description
+        TextView TVDate = (TextView) convertView.findViewById(R.id.date);
+
+        TextView TVAmount = (TextView) convertView.findViewById(R.id.amount);
+
+        try{
+            TVDate.setText(currentItem.getString("tx_hash"));
+        }
+        catch (JSONException e){
+            TVDate.setText("err");
+        }
+
+        return convertView;
+    }
+
+    public View handleBitcoin(int position, View convertView){
         // get current item to be displayed
         JSONObject currentItem = (JSONObject) getItem(position);
 
@@ -64,10 +101,6 @@ public class ListAdapter extends BaseAdapter {
             TVDate.setText("err");
         }
 
-        // returns the view for the current row
         return convertView;
-    }
-    public void add(JSONObject o){
-        vector.add(o);
     }
 }

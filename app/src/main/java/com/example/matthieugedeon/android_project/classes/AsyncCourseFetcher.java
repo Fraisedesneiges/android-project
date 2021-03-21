@@ -84,7 +84,6 @@ public class AsyncCourseFetcher  extends AsyncTask<String, Void, JSONObject> {
                 switch (strings[i]){
                     case "1 BTC": url = new URL(COURSE_URL.concat("BTC")); break;
                     case "1 ETH": url = new URL(COURSE_URL+"ETH"); break;
-                    case "1 DOGE": url = new URL(COURSE_URL+"DOGE"); break;
                     default: break;
                 }
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();

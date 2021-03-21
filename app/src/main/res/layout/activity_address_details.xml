@@ -27,6 +27,7 @@
                 android:id="@+id/address_icon"
                 android:layout_width="115dp"
                 android:layout_height="31dp"
+                android:layout_margin="30px"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/btc" />
 
@@ -35,14 +36,15 @@
                 android:layout_width="185dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Balance :" />
+                android:text="Balance :"
+                android:textColor="#FFFFFF" />
 
             <TextView
                 android:id="@+id/ad_balance"
                 android:layout_width="221dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:textColor="#FFFFFF" />
 
             <Spinner
                 android:id="@+id/currency_course"

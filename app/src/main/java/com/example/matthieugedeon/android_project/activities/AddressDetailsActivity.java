@@ -32,18 +32,21 @@ public class AddressDetailsActivity extends AppCompatActivity {
         ImageView icon = (ImageView)findViewById(R.id.address_icon);
 
         switch(coin){
-            case "BTC": icon.setImageDrawable(getDrawable(R.drawable.btc)); break;
+            case "BTC":
+                icon.setImageDrawable(getDrawable(R.drawable.btc));
+
+                break;
             case "ETH": icon.setImageDrawable(getDrawable(R.drawable.eth)); break;
             default: break;
         }
 
         //Getting the list by its id and linking our tailored adapter to it
         ListView list = (ListView)findViewById(R.id.list);
-        ListAdapter adapter = new ListAdapter(this,new Vector<JSONObject>());
+        ListAdapter adapter = new ListAdapter(this,new Vector<JSONObject>(),coin);
         list.setAdapter(adapter);
 
 
-        AsyncWalletFetcher fetcher = new AsyncWalletFetcher(R.id.ad_balance,this,adapter);
+        AsyncWalletFetcher fetcher = new AsyncWalletFetcher(R.id.ad_balance,this,adapter,coin);
         fetcher.execute(address);
     }
 }

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
@@ -92,8 +93,10 @@ public class MainBaseFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Log.i("Button","Clicked");
+            EditText address = (EditText)getView().findViewById(R.id.address);
+
             Intent intent = new Intent(getActivity(), AddressDetailsActivity.class);
-            intent.putExtra("address", "https://blockchain.info/rawaddr/1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX");
+            intent.putExtra("address", address.getText().toString());
 
             Spinner spinner = (Spinner)getView().findViewById(R.id.coin_type);
             String text = spinner.getSelectedItem().toString();

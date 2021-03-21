@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 import com.example.matthieugedeon.android_project.R;
 import com.example.matthieugedeon.android_project.classes.DataBaseHelper;
+import com.example.matthieugedeon.android_project.classes.Parser;
+import com.example.matthieugedeon.android_project.classes.SessionData;
+import com.example.matthieugedeon.android_project.fragments.MainConnectedFragment;
 
 public class LogInActivity extends AppCompatActivity {
     DataBaseHelper dbHelper;
@@ -47,12 +50,21 @@ public class LogInActivity extends AppCompatActivity {
                     do {
                         StringBuilder sb = new StringBuilder();
                         sb.append(cursor.getString(0));
+                        SessionData.setRowWallets(sb.toString());
+                        SessionData.setWallets(Parser.getWallet(sb.toString()));
                         Log.i("LOG", sb.toString());
+
                     } while (cursor.moveToNext());
                 }
+                SessionData.getMainFM().beginTransaction()
+                        //.remove(fm.findFragmentById(R.id.content)) // resolves to A_Fragment instance
+                        .add(R.id.main_container, MainConnectedFragment.class, null)
+                        .addToBackStack("a")
+                        .commit();
             } else {
                 toast("No such user in the database");
             }
+            finish();
         }
     }
 }
