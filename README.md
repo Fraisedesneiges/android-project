@@ -28,7 +28,7 @@ BTC addresses :
 
 ETH address :
 738d145faabb1e00cf5a017588a9c0f998318012
-
+fe88B5604b8C8E7Cd68A9Aa135ba20B206A73848
 
 
 ### Matthieu GEDEON , Daniil ROSSO , Software Engineering (Efrei Paris)
