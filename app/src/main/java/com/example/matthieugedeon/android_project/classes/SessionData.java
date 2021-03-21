@@ -19,5 +19,7 @@ public final class SessionData {
         SessionData.username = username;
     }
 
-    public static void setConnected(boolean )
+    public static void setConnected(boolean connected){
+        SessionData.connected = connected;
+    }
 }
