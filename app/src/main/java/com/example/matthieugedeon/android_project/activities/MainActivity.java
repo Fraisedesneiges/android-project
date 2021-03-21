@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                 String s = (String)parent.getItemAtPosition(pos);
 
                 Spinner spinner = (Spinner)findViewById(R.id.currency_course) ;
-                String text = (String)spinner.getSelectedItem().toString().subSequence(2,4);
+                String text = (String)spinner.getSelectedItem().toString();
 
                 AsyncCourseFetcher fetcher;
                 switch (s) {
